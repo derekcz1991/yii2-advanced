@@ -25,6 +25,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'status') ?>
 
+    <?= $form->field($model, 'authorName')->label('作者') ?>
+
     <?php // echo $form->field($model, 'create_time') ?>
 
     <?php // echo $form->field($model, 'update_time') ?>

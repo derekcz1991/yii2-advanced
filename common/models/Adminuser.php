@@ -13,6 +13,9 @@ use Yii;
  * @property string $password
  * @property string $email
  * @property string $profile
+ * @property string $password_hash
+ * @property string $password_reset_token
+ * @property string $auth_key
  *
  * @property Post[] $posts
  */
@@ -32,7 +35,7 @@ class Adminuser extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['username', 'nickname', 'password', 'email'], 'required'],
+            [['username', 'nickname', 'password', 'email', 'password_hash', 'auth_key'], 'required'],
             [['profile'], 'string'],
             [['username', 'nickname', 'password', 'email'], 'string', 'max' => 128],
         ];
@@ -50,6 +53,9 @@ class Adminuser extends \yii\db\ActiveRecord
             'password' => 'Password',
             'email' => 'Email',
             'profile' => 'Profile',
+            'password_hash' => 'Password Hash',
+            'password_reset_token' => 'Password Reset Token',
+            'auth_key' => 'Auth Key',
         ];
     }
 
@@ -59,5 +65,13 @@ class Adminuser extends \yii\db\ActiveRecord
     public function getPosts()
     {
         return $this->hasMany(Post::className(), ['author_id' => 'id']);
+    }
+
+    public static function getUsernameArray()
+    {
+        return Adminuser::find()
+            ->select(['nickname', 'id'])
+            ->indexBy('id')
+            ->column();
     }
 }
